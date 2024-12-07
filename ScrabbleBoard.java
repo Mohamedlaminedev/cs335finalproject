@@ -3,9 +3,11 @@ import java.awt.*;
 import java.util.List;
 import java.util.ArrayList;
 
-private boolean isFirstTurn = true;  // Tracks if it's the first turn of the game
+
 
 public class ScrabbleBoard extends JPanel {
+	
+	private boolean isFirstTurn = true;  // Tracks if it's the first turn of the game
     private static final int BOARD_SIZE = 15;
     private JButton[][] squares = new JButton[BOARD_SIZE][BOARD_SIZE];
     private JButton selectedTile = null;
@@ -49,9 +51,7 @@ public class ScrabbleBoard extends JPanel {
     }
 
     // GUI Control Methods
-    public void enableSquare(int row, int col, boolean enable) {
-        squares[row][col].setEnabled(enable);
-    }
+   
 
     public void placeTile(int row, int col, char letter) {
         squares[row][col].setText(String.valueOf(letter));
@@ -82,21 +82,24 @@ public class ScrabbleBoard extends JPanel {
             }
         }
     }
- // Used to guide players where they can legally place tiles
+    /**
+     * Enables/disables board squares with visual feedback
+     * @param row Row position on board
+     * @param col Column position on board
+     * @param enable Whether to enable the square
+     */
     public void enableSquare(int row, int col, boolean enable) {
         squares[row][col].setEnabled(enable);
         
-        // When enabled: shows green highlight to indicate valid placement
         if (enable) {
             squares[row][col].setBorder(BorderFactory.createLineBorder(Color.GREEN, 2));
-            squares[row][col].setBackground(new Color(230, 255, 230)); // Light green for visibility
-        } 
-        // When disabled: returns to default appearance
-        else {
+            squares[row][col].setBackground(new Color(230, 255, 230)); // Light green
+        } else {
             squares[row][col].setBorder(UIManager.getBorder("Button.border"));
             setDefaultSquareColor(row, col);
         }
     }
+
 
     // Checks if a square should be enabled based on Scrabble rules:
     // 1. First turn must use center square
